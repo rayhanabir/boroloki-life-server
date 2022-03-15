@@ -149,14 +149,15 @@ async function run() {
       res.json(result);
     });
 
+        // set order  status 
     app.put('/orders/:id', async(req, res)=>{
       const id = req.params.id;
       const status = req.body.status;
       const filter = {_id:ObjectId(id)}
-      const updateDoc = {$set:{status:status}}
+      const updateDoc = {$set:{status:status.toLowerCase()}}
       const result = await ordersCollection.updateOne(filter, updateDoc);
-      console.log(result);
-      res.json(result);
+      if(!result.modifiedCount)return res.send({status:0,message:'update faild'})
+      res.json({status:1, message:'update successful'});
     })
 
               //all delete api 
