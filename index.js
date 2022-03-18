@@ -156,7 +156,9 @@ async function run() {
       const filter = {_id:ObjectId(id)}
       const updateDoc = {$set:{status:status.toLowerCase()}}
       const result = await ordersCollection.updateOne(filter, updateDoc);
-      if(!result.modifiedCount)return res.send({status:0,message:'update faild'})
+      if(!result.modifiedCount){
+        return res.send({status:0,message:'update faild'})
+      }
       res.json({status:1, message:'update successful'});
     })
 
